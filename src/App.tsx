@@ -313,8 +313,7 @@ function RSVPPage({onSubmit}: { onSubmit: (name: string) => void }) {
                         paddingLeft: '1rem',
                     }}
                 >
-                    You've received a personal invitation. This celebration is by invitation only, and
-                    each invitation admits one guest.
+                    This is a personal invitation, and each invitation admits one guest. We look forward to celebrating with you!
                 </p>
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
