@@ -108,7 +108,7 @@ function InvitePage({onRSVP}: { onRSVP: () => void }) {
                             letterSpacing: '0.02em',
                         }}
                     >
-                        Saturday, 11th October 2025
+                        Saturday, 10th October 2026
                     </p>
                     <p
                         style={{
@@ -164,7 +164,7 @@ function InvitePage({onRSVP}: { onRSVP: () => void }) {
                         letterSpacing: '0.12em',
                         textTransform: 'uppercase'
                     }}>
-                        Kindly RSVP by 6th October 2025
+                        Kindly RSVP by 5th October 2026
                     </p>
                 </div>
 
@@ -212,14 +212,40 @@ function InvitePage({onRSVP}: { onRSVP: () => void }) {
 function RSVPPage({onSubmit}: { onSubmit: (name: string) => void }) {
     const [name, setName] = useState('')
     const [error, setError] = useState('')
+    const [submitError, setSubmitError] = useState('')
+    const [submitting, setSubmitting] = useState(false)
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        if (submitting) return
         if (!name.trim()) {
             setError('Please enter your name.')
             return
         }
-        onSubmit(name.trim())
+
+        setSubmitting(true)
+        setError('')
+        setSubmitError('')
+
+        try {
+            const response = await fetch('/api/rsvp', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({name: name.trim()}),
+            })
+            const payload = await response.json().catch(() => null)
+
+            if (!response.ok || !payload?.ok) {
+                setSubmitError(payload?.error ?? 'Something went wrong. Please try again.')
+                return
+            }
+
+            onSubmit(payload.name)
+        } catch {
+            setSubmitError('We could not reach the server. Please check your connection and try again.')
+        } finally {
+            setSubmitting(false)
+        }
     }
 
     return (
@@ -296,8 +322,10 @@ function RSVPPage({onSubmit}: { onSubmit: (name: string) => void }) {
                             onChange={e => {
                                 setName(e.target.value);
                                 setError('')
+                                setSubmitError('')
                             }}
                             placeholder="Your full name"
+                            disabled={submitting}
                             style={{
                                 background: 'transparent',
                                 border: '1px solid rgba(200, 170, 82, 0.45)',
@@ -322,12 +350,18 @@ function RSVPPage({onSubmit}: { onSubmit: (name: string) => void }) {
                                 {error}
                             </p>
                         )}
+                        {submitError && (
+                            <p style={{color: '#E8A9A9', fontSize: '0.8rem', fontFamily: 'var(--font-body)'}}>
+                                {submitError}
+                            </p>
+                        )}
                     </div>
 
                     <button
                         type="submit"
+                        disabled={submitting}
                         style={{
-                            background: '#C9AA52',
+                            background: submitting ? '#8f7a3f' : '#C9AA52',
                             color: '#2D3B31',
                             fontFamily: 'var(--font-body)',
                             fontSize: '0.82rem',
@@ -336,18 +370,18 @@ function RSVPPage({onSubmit}: { onSubmit: (name: string) => void }) {
                             textTransform: 'uppercase',
                             padding: '1rem',
                             border: 'none',
-                            cursor: 'pointer',
+                            cursor: submitting ? 'progress' : 'pointer',
                             marginTop: '0.5rem',
                             transition: 'background 0.2s, color 0.2s',
                         }}
                         onMouseEnter={e => {
-                            (e.currentTarget as HTMLButtonElement).style.background = '#F5F0E1'
+                            if (!submitting) (e.currentTarget as HTMLButtonElement).style.background = '#F5F0E1'
                         }}
                         onMouseLeave={e => {
-                            (e.currentTarget as HTMLButtonElement).style.background = '#C9AA52'
+                            if (!submitting) (e.currentTarget as HTMLButtonElement).style.background = '#C9AA52'
                         }}
                     >
-                        Confirm RSVP
+                        {submitting ? 'Saving...' : 'Confirm RSVP'}
                     </button>
                 </form>
 
@@ -367,7 +401,7 @@ function AddToCalendar() {
     const googleUrl =
         'https://calendar.google.com/calendar/render?action=TEMPLATE' +
         '&text=Lucy+%26+Caleb+Wedding' +
-        '&dates=20251011T073000Z%2F20251011T110000Z' +
+        '&dates=20261010T073000Z%2F20261010T140000Z' +
         '&details=Wedding+ceremony+for+Lucy+%26+Caleb' +
         '&location=CITAM+Buruburu%2C+Nairobi'
 
@@ -377,10 +411,10 @@ function AddToCalendar() {
             'VERSION:2.0',
             'PRODID:-//Lucy & Caleb Wedding//EN',
             'BEGIN:VEVENT',
-            'UID:lucy-caleb-wedding-2025@citamburuburu',
-            'DTSTAMP:20250928T000000Z',
-            'DTSTART:20251011T073000Z',
-            'DTEND:20251011T110000Z',
+            'UID:lucy-caleb-wedding-2026@citamburuburu',
+            'DTSTAMP:20260928T000000Z',
+            'DTSTART:20261010T073000Z',
+            'DTEND:20261010T140000Z',
             'SUMMARY:Lucy & Caleb Wedding',
             'DESCRIPTION:Wedding ceremony for Lucy & Caleb',
             'LOCATION:CITAM Buruburu\\, Nairobi',
@@ -601,7 +635,7 @@ function ThanksPage({guestName, onHome}: { guestName: string; onHome: () => void
                                 fontSize: '0.82rem',
                                 opacity: 0.6
                             }}>Date</span>
-                            <span style={{fontFamily: 'var(--font-body)', color: '#F5F0E1', fontSize: '0.82rem'}}>Saturday, 11th Oct 2025</span>
+                            <span style={{fontFamily: 'var(--font-body)', color: '#F5F0E1', fontSize: '0.82rem'}}>Saturday, 10th Oct 2026</span>
                         </div>
                         <div className="flex justify-between gap-4">
                             <span style={{
