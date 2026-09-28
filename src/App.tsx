@@ -3,6 +3,16 @@ import {Analytics} from '@vercel/analytics/react';
 
 type Page = 'invite' | 'rsvp' | 'thanks'
 
+const WEDDING_START = '2026-10-10T10:00:00+03:00'
+const WEDDING_END = '2026-10-10T17:00:00+03:00'
+const WEDDING_TIME_LABEL = '10:00 AM'
+
+const toUtcStamp = (iso: string) =>
+    new Date(iso).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')
+
+const WEDDING_START_UTC = toUtcStamp(WEDDING_START)
+const WEDDING_END_UTC = toUtcStamp(WEDDING_END)
+
 function Leaf({className}: { className?: string }) {
     return (
         <svg className={className} viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -119,7 +129,7 @@ function InvitePage({onRSVP}: { onRSVP: () => void }) {
                             textTransform: 'uppercase',
                         }}
                     >
-                        10:30 AM
+                        {WEDDING_TIME_LABEL}
                     </p>
                     <a
                         href="https://www.google.com/maps/search/CITAM+Buruburu+Nairobi"
@@ -416,7 +426,7 @@ function AddToCalendar() {
     const googleUrl =
         'https://calendar.google.com/calendar/render?action=TEMPLATE' +
         '&text=Lucy+%26+Caleb+Wedding' +
-        '&dates=20261010T073000Z%2F20261010T140000Z' +
+        `&dates=${WEDDING_START_UTC}%2F${WEDDING_END_UTC}` +
         '&details=Wedding+ceremony+for+Lucy+%26+Caleb' +
         '&location=CITAM+Buruburu%2C+Nairobi'
 
@@ -427,9 +437,9 @@ function AddToCalendar() {
             'PRODID:-//Lucy & Caleb Wedding//EN',
             'BEGIN:VEVENT',
             'UID:lucy-caleb-wedding-2026@citamburuburu',
-            'DTSTAMP:20260928T000000Z',
-            'DTSTART:20261010T073000Z',
-            'DTEND:20261010T140000Z',
+            `DTSTAMP:${toUtcStamp(new Date().toISOString())}`,
+            `DTSTART:${WEDDING_START_UTC}`,
+            `DTEND:${WEDDING_END_UTC}`,
             'SUMMARY:Lucy & Caleb Wedding',
             'DESCRIPTION:Wedding ceremony for Lucy & Caleb',
             'LOCATION:CITAM Buruburu\\, Nairobi',
@@ -659,7 +669,7 @@ function ThanksPage({guestName, onHome}: { guestName: string; onHome: () => void
                                 fontSize: '0.82rem',
                                 opacity: 0.6
                             }}>Time</span>
-                            <span style={{fontFamily: 'var(--font-body)', color: '#F5F0E1', fontSize: '0.82rem'}}>10:30 AM</span>
+                            <span style={{fontFamily: 'var(--font-body)', color: '#F5F0E1', fontSize: '0.82rem'}}>{WEDDING_TIME_LABEL}</span>
                         </div>
                         <div className="flex justify-between gap-4">
                             <span style={{
