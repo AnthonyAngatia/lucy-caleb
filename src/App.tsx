@@ -294,11 +294,27 @@ function RSVPPage({onSubmit}: { onSubmit: (name: string) => void }) {
                         fontFamily: 'var(--font-body)',
                         color: '#8EBB9C',
                         fontSize: '0.9rem',
-                        marginBottom: '2.5rem',
+                        marginBottom: '1.25rem',
                         lineHeight: 1.6,
                     }}
                 >
                     Please let us know you're coming by entering your name below.
+                </p>
+
+                <p
+                    style={{
+                        fontFamily: 'var(--font-body)',
+                        color: '#C9AA52',
+                        fontSize: '0.88rem',
+                        lineHeight: 1.7,
+                        marginBottom: '1.5rem',
+                        textAlign: 'left',
+                        borderLeft: '2px solid #C9AA52',
+                        paddingLeft: '1rem',
+                    }}
+                >
+                    You've received a personal invitation. This celebration is by invitation only, and
+                    each invitation admits one guest.
                 </p>
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
