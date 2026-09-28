@@ -102,7 +102,7 @@ function InvitePage({onRSVP}: { onRSVP: () => void }) {
                     <br/>
                     <span style={{color: '#C9AA52', fontStyle: 'italic', fontWeight: 300}}>&</span>
                     <br/>
-                    Caleb
+                    Calleb
                 </h1>
 
                 <GoldDivider delay={0}/>
@@ -281,7 +281,7 @@ function RSVPPage({onSubmit}: { onSubmit: (name: string) => void }) {
                         marginBottom: '1rem',
                     }}
                 >
-                    Lucy & Caleb
+                    Lucy & Calleb
                 </p>
 
                 <h2
@@ -425,23 +425,23 @@ function AddToCalendar() {
 
     const googleUrl =
         'https://calendar.google.com/calendar/render?action=TEMPLATE' +
-        '&text=Lucy+%26+Caleb+Wedding' +
+        '&text=Lucy+%26+Calleb+Wedding' +
         `&dates=${WEDDING_START_UTC}%2F${WEDDING_END_UTC}` +
-        '&details=Wedding+ceremony+for+Lucy+%26+Caleb' +
+        '&details=Wedding+ceremony+for+Lucy+%26+Calleb' +
         '&location=CITAM+Buruburu%2C+Nairobi'
 
     const downloadIcs = () => {
         const ics = [
             'BEGIN:VCALENDAR',
             'VERSION:2.0',
-            'PRODID:-//Lucy & Caleb Wedding//EN',
+            'PRODID:-//Lucy & Calleb Wedding//EN',
             'BEGIN:VEVENT',
-            'UID:lucy-caleb-wedding-2026@citamburuburu',
+            'UID:lucy-calleb-wedding-2026@citamburuburu',
             `DTSTAMP:${toUtcStamp(new Date().toISOString())}`,
             `DTSTART:${WEDDING_START_UTC}`,
             `DTEND:${WEDDING_END_UTC}`,
-            'SUMMARY:Lucy & Caleb Wedding',
-            'DESCRIPTION:Wedding ceremony for Lucy & Caleb',
+            'SUMMARY:Lucy & Calleb Wedding',
+            'DESCRIPTION:Wedding ceremony for Lucy & Calleb',
             'LOCATION:CITAM Buruburu\\, Nairobi',
             'END:VEVENT',
             'END:VCALENDAR',
@@ -450,7 +450,7 @@ function AddToCalendar() {
         const url = URL.createObjectURL(blob)
         const a = document.createElement('a')
         a.href = url
-        a.download = 'lucy-caleb-wedding.ics'
+        a.download = 'lucy-calleb-wedding.ics'
         a.click()
         URL.revokeObjectURL(url)
         setOpen(false)
@@ -630,7 +630,7 @@ function ThanksPage({guestName, onHome}: { guestName: string; onHome: () => void
                         marginBottom: '2rem',
                     }}
                 >
-                    Your presence means the world to Lucy & Caleb.<br/>
+                    Your presence means the world to Lucy & Calleb.<br/>
                     We look forward to sharing this special day with you.
                 </p>
 

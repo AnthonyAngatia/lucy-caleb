@@ -1,4 +1,4 @@
-# Lucy & Caleb
+# Lucy & Calleb
 
 Wedding invitation site with an RSVP form. React + Vite frontend on Vercel, with guest names persisted to a Neon Postgres database through a Vercel serverless function.
 

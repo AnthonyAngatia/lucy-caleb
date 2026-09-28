@@ -1,4 +1,4 @@
-# lucy-caleb
+# lucy-calleb
 
 React + Vite + Tailwind CSS wedding invitation site, deployed to Vercel. Guest RSVPs are persisted to a Neon Postgres database.
 
